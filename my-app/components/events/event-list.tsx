@@ -1,11 +1,22 @@
 import React from "react";
+import { IDummyEvent } from "../../types";
 import EventItem from "./event-item";
-const EventList = (props) => {
-  const { items } = props;
+interface IEventLIst {
+  items: IDummyEvent[];
+}
+
+const EventList = ({ items }: IEventLIst) => {
   return (
     <div>
       {items.map((event) => (
-        <EventItem></EventItem>
+        <EventItem
+          key={event.id}
+          id={event.id}
+          title={event.title}
+          image={event.image}
+          date={event.date}
+          location={event.location}
+        ></EventItem>
       ))}
     </div>
   );
