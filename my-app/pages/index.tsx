@@ -27,14 +27,16 @@ const Home = (props: IProduct) => {
 };
 
 export async function getStaticProps() {
+  console.log("redender");
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json");
-  const jsonData: any = await fs.readFile(filePath);
-  const data = JSON.parse(jsonData);
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData as unknown as string);
   return {
     props: {
       products: data.products,
     },
+    revalidate: 10, //10초마다 재생성
   };
 }
-
+//개발 서버는 revalidate가 있어도 항상 최신 데이터다.
 export default Home;
