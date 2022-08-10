@@ -31,6 +31,22 @@ export async function getStaticProps() {
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json");
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData as unknown as string);
+
+  if (!data) {
+    //데이터 자체가 없을떄
+    return {
+      redirect: {
+        destination: "/no-data",
+      },
+    };
+  }
+
+  if (data.products.length === 0) {
+    //패칭했는데 데이터가 없을떄
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       products: data.products,
