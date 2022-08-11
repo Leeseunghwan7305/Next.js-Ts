@@ -7,7 +7,7 @@ import styles from "../styles/Home.module.css";
 import fs from "fs/promises"; //서버쪽 임폴트는 제거한다.
 // getStaticProps 도 제거 한다.
 import path from "path"; //경로 구축할떄 씀
-interface IProduct {
+export interface IProduct {
   products: [
     {
       id: string;
@@ -20,7 +20,9 @@ const Home = (props: IProduct) => {
   return (
     <ul>
       {products.map((product) => (
-        <li key={product.id}>{product.title}</li>
+        <li key={product.id}>
+          <Link href={`/${product.id}`}>{product.title}</Link>
+        </li>
       ))}
     </ul>
   );
