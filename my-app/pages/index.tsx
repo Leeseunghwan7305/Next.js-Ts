@@ -7,16 +7,16 @@ import styles from "../styles/Home.module.css";
 import fs from "fs/promises"; //서버쪽 임폴트는 제거한다.
 // getStaticProps 도 제거 한다.
 import path from "path"; //경로 구축할떄 씀
+import { getProducts } from "../utils/getProducts";
 export interface IProduct {
-  products: [
-    {
-      id: string;
-      title: string;
-    }
-  ];
+  id: string;
+  title: string;
+  description: string;
 }
-const Home = (props: IProduct) => {
-  const { products } = props;
+interface HomePageProps {
+  products: IProduct[];
+}
+const Home: NextPage<HomePageProps> = ({ products }) => {
   return (
     <ul>
       {products.map((product) => (
@@ -30,10 +30,8 @@ const Home = (props: IProduct) => {
 
 export async function getStaticProps() {
   console.log("redender");
-  const filePath = path.join(process.cwd(), "data", "dummy-backend.json");
-  const jsonData = await fs.readFile(filePath);
-  const data = JSON.parse(jsonData as unknown as string);
 
+  let data = await getProducts();
   if (!data) {
     //데이터 자체가 없을떄
     return {
