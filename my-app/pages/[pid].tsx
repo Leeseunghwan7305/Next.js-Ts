@@ -31,6 +31,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const product = data.products.find(
     (product: IProduct) => product.id === productId
   );
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       product,
@@ -39,19 +44,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 //동적 페이지의 어떤 인스턴스를 생성할지 next js에 알리는 함수
 export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await getProducts();
+  const ids = data.product.map((product: IProduct) => product.id);
+  const params = ids.map((id: string) => ({ params: { pid: id } }));
   return {
-    paths: [
-      {
-        params: { pid: "p1" },
-      },
-      {
-        params: { pid: "p2" },
-      },
-      {
-        params: { pid: "p3" },
-      },
-    ],
-    fallback: false, // true,false,"blocking"
+    paths: params,
+    fallback: true, // true,false,"blocking"
   };
 };
 //동적 페이지의 어떤 인스턴스를 생성할지 nextjs에 알리는 함수
