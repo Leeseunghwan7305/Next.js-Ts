@@ -16,3 +16,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
+//콘텍스트 객체에 접근할 수 있는 데이터 종류가 다르고
+//함수가 실행되는 시점,타이밍이 다르다는 점이 큰 차이이다.
