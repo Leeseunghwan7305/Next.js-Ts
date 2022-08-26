@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 //동적 페이지의 어떤 인스턴스를 생성할지 next js에 알리는 함수
 export const getStaticPaths: GetStaticPaths = async () => {
   const data = await getProducts();
-  const ids = data.product.map((product: IProduct) => product.id);
+  const ids = data.products.map((product: IProduct) => product.id);
   const params = ids.map((id: string) => ({ params: { pid: id } }));
   return {
     paths: params,
